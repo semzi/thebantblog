@@ -12,7 +12,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="blog" element={<BlogReadPage />} />
+          <Route path="blog/:id" element={<BlogReadPage />} />
           <Route path="admin" element={<Dashboard />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="admin/blogpost" element={  <BlogPostList /> } />

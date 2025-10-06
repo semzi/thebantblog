@@ -9,7 +9,18 @@ export const getAllPosts = async () => {
 
 // Fetch single post
 export const getPostById = async (id: any) => {
-  const { data } = await API.get(`/posts/${id}`);
+  const { data } = await API.get(`/blogpost/${id}`);
+  return data;
+};
+export type ReactionType = "like" | "love" | "clap";
+
+export const reactToPost = async (id: any, type: ReactionType) => {
+  const { data } = await API.post(`/blogpost/${id}/react`, { type });
+  return data;
+};  
+export type NewComment = { displayName: string; message: string };
+export const commentOnPost = async (id: any, comment: NewComment) => {
+  const { data } = await API.post(`/blogpost/${id}/comments`, comment);
   return data;
 };
 

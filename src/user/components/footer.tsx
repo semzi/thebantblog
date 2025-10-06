@@ -40,7 +40,7 @@ const footer = () => {
 
             
                 <form action=" " className='flex  mb-5 items-center'>
-                    <input type="text" placeholder='Enter your email' className='bg-white w-100 px-4 py-2 rounded-l  outline-none focus:border-1  border-brand-p4' />
+                    <input type="text" placeholder='Enter your email' className='bg-white w-full px-4 py-2 rounded-l  outline-none focus:border-1  border-brand-p4' />
                     <input type="button" value="Join Now!" className='secondary font-medium text-[14px] outline-none text-white cursor-pointer px-4 py-2  rounded-r  hover:bg-blue-600 transition-colors duration-200' typeof='submit' />
                 </form>
             
