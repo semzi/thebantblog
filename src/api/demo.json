@@ -1,0 +1,303 @@
+[
+  {
+    "id": 1,
+    "title": "Tech Giants Announce Breakthrough in Quantum Computing",
+    "image": "https://placehold.co/600x400/512768/FFFFFF?text=Quantum+Leap",
+    "body": "A consortium of <strong>leading tech companies</strong> today revealed a major advancement in <em>quantum computing</em>, showcasing a new processor that is said to be 100 times more powerful than its predecessors. This could revolutionize fields from medicine to finance.<ul><li>Medicine</li><li>Finance</li><li>Materials Science</li></ul>",
+    "hashtags": ["#tech", "#quantumcomputing", "#innovation"],
+    "reactions": {
+      "fire": 1200,
+      "thumbs": 2500,
+      "love": 800,
+      "wow": 3000
+    },
+    "author": "Jane Doe",
+    "createdAt": "2025-09-27T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Exploring the Deepest Oceans: New Species Discovered",
+    "image": "https://placehold.co/600x400/1E4C72/FFFFFF?text=Deep+Sea",
+    "body": "An international team of marine biologists has returned from a groundbreaking expedition to the Mariana Trench, reporting the discovery of over a dozen new species of deep-sea creatures. The findings highlight the incredible biodiversity hidden in our oceans.",
+    "hashtags": ["#science", "#ocean", "#discovery"],
+    "reactions": {
+      "fire": 500,
+      "thumbs": 1800,
+      "love": 2200,
+      "wow": 4500
+    },
+    "author": "John Smith",
+    "createdAt": "2025-09-27T11:30:00Z"
+  },
+  {
+    "id": 3,
+    "title": "Global Markets Rally on Positive Economic Outlook",
+    "image": "https://placehold.co/600x400/28A745/FFFFFF?text=Market+Growth",
+    "body": "Stock markets around the world saw significant gains today as new economic data suggests a stronger-than-expected recovery. Investors are optimistic about future growth, with the tech and renewable energy sectors leading the charge.",
+    "hashtags": ["#finance", "#economy", "#stocks"],
+    "reactions": {
+      "fire": 950,
+      "thumbs": 3200,
+      "love": 600,
+      "wow": 1500
+    },
+    "author": "Emily White",
+    "createdAt": "2025-09-26T15:00:00Z"
+  },
+  {
+    "id": 4,
+    "title": "The Future of Sustainable Travel: Are Electric Planes Next?",
+    "image": "https://placehold.co/600x400/007BFF/FFFFFF?text=Eco+Travel",
+    "body": "As the world grapples with climate change, the travel industry is under pressure to innovate. We explore the latest developments in sustainable aviation, including the promising but challenging prospect of commercial electric airplanes.",
+    "hashtags": ["#travel", "#sustainability", "#future"],
+    "reactions": {
+      "fire": 1100,
+      "thumbs": 2300,
+      "love": 1500,
+      "wow": 1800
+    },
+    "author": "Chris Green",
+    "createdAt": "2025-09-26T09:00:00Z"
+  },
+  {
+    "id": 5,
+    "title": "A Guide to Mindful Eating This Holiday Season",
+    "image": "https://placehold.co/600x400/FFC107/333333?text=Wellness",
+    "body": "With festivities just around the corner, it's easy to overindulge. A wellness expert shares practical tips on how to practice mindful eating, enjoy your favorite foods, and maintain a healthy balance during the holiday season.",
+    "hashtags": ["#health", "#wellness", "#lifestyle"],
+    "reactions": {
+      "fire": 400,
+      "thumbs": 1500,
+      "love": 2800,
+      "wow": 700
+    },
+    "author": "Sarah Brown",
+    "createdAt": "2025-09-25T18:00:00Z"
+  },
+  {
+    "id": 6,
+    "title": "Independent Film 'Echoes of Silence' Wins Top Festival Award",
+    "image": "https://placehold.co/600x400/6C757D/FFFFFF?text=Indie+Film",
+    "body": "The low-budget drama 'Echoes of Silence' has become the surprise winner at the prestigious Sundance Film Festival. Critics are praising its powerful storytelling and stunning cinematography, marking a significant moment for independent cinema.",
+    "hashtags": ["#movies", "#film", "#entertainment"],
+    "reactions": {
+      "fire": 800,
+      "thumbs": 1900,
+      "love": 3500,
+      "wow": 1200
+    },
+    "author": "Michael Black",
+    "createdAt": "2025-09-25T14:20:00Z"
+  },
+  {
+    "id": 7,
+    "title": "The Rise of Vertical Farming in Urban Centers",
+    "image": "https://placehold.co/600x400/17A2B8/FFFFFF?text=Urban+Farming",
+    "body": "As city populations grow, vertical farming is emerging as a sustainable solution to food production. These high-tech indoor farms can grow crops year-round with less water and land, bringing fresh produce closer to consumers.",
+    "hashtags": ["#future", "#food", "#sustainability"],
+    "reactions": {
+      "fire": 1300,
+      "thumbs": 2600,
+      "love": 1400,
+      "wow": 2100
+    },
+    "author": "Laura Blue",
+    "createdAt": "2025-09-24T20:00:00Z"
+  },
+  {
+    "id": 8,
+    "title": "How AI is Changing the Game for Music Composers",
+    "image": "https://placehold.co/600x400/DC3545/FFFFFF?text=AI+Music",
+    "body": "Artificial intelligence is no longer just a tool for analyzing music; it's now capable of creating it. We talk to composers and technologists about how AI is transforming the creative process, from generating ideas to producing full scores.",
+    "hashtags": ["#ai", "#music", "#creativity"],
+    "reactions": {
+      "fire": 1500,
+      "thumbs": 2000,
+      "love": 1100,
+      "wow": 2500
+    },
+    "author": "David Gray",
+    "createdAt": "2025-09-24T12:00:00Z"
+  },
+  {
+    "id": 9,
+    "title": "Historic Chess Championship Ends in a Surprising Upset",
+    "image": "https://placehold.co/600x400/343A40/FFFFFF?text=Chess+Upset",
+    "body": "The World Chess Championship concluded today with a stunning victory for the 19-year-old underdog challenger. In a series of brilliant moves, she dethroned the reigning champion of ten years in the final tie-breaker match.",
+    "hashtags": ["#sports", "#chess", "#competition"],
+    "reactions": {
+      "fire": 2000,
+      "thumbs": 3800,
+      "love": 900,
+      "wow": 4200
+    },
+    "author": "Peter Purple",
+    "createdAt": "2025-09-23T19:00:00Z"
+  },
+  {
+    "id": 10,
+    "title": "DIY Home Renovation: 5 Projects You Can Tackle This Weekend",
+    "image": "https://placehold.co/600x400/FD7E14/FFFFFF?text=DIY+Home",
+    "body": "Looking to refresh your living space without breaking the bank? We've compiled a list of five easy and impactful DIY home renovation projects that you can complete in just one weekend, from painting an accent wall to upgrading your kitchen hardware.",
+    "hashtags": ["#diy", "#home", "#lifestyle"],
+    "reactions": {
+      "fire": 300,
+      "thumbs": 2100,
+      "love": 1800,
+      "wow": 500
+    },
+    "author": "Olivia Orange",
+    "createdAt": "2025-09-23T13:45:00Z"
+  },
+  {
+    "id": 11,
+    "title": "Space Agency Confirms Water Ice on Mars' Equator",
+    "image": "https://placehold.co/600x400/E83E8C/FFFFFF?text=Mars+Water",
+    "body": "In a landmark announcement, NASA has confirmed the presence of significant subsurface water ice deposits near the Martian equator. This discovery has major implications for future human missions to the Red Planet, as it provides a potential resource for astronauts.",
+    "hashtags": ["#space", "#mars", "#nasa", "#science"],
+    "reactions": {
+      "fire": 3500,
+      "thumbs": 5000,
+      "love": 2500,
+      "wow": 6000
+    },
+    "author": "Captain Kirk",
+    "createdAt": "2025-09-22T22:00:00Z"
+  },
+  {
+    "id": 12,
+    "title": "The Art of Slow Cooking: A Beginner's Guide",
+    "image": "https://placehold.co/600x400/6F42C1/FFFFFF?text=Slow+Cooking",
+    "body": "Discover the magic of slow cooking with our comprehensive guide. Learn how to choose the right cooker, prepare your ingredients, and master classic recipes that will fill your home with delicious aromas and deliver tender, flavorful meals with minimal effort.",
+    "hashtags": ["#food", "#recipe", "#cooking"],
+    "reactions": {
+      "fire": 650,
+      "thumbs": 2400,
+      "love": 3100,
+      "wow": 800
+    },
+    "author": "Gordon Ramsay Jr.",
+    "createdAt": "2025-09-22T16:15:00Z"
+  },
+  {
+    "id": 13,
+    "title": "Cybersecurity Alert: New 'Phantom' Malware Affects Millions",
+    "image": "https://placehold.co/600x400/20C997/333333?text=Cyber+Alert",
+    "body": "Cybersecurity experts have issued a global alert for a new strain of malware called 'Phantom'. It operates by stealthily stealing personal data before erasing its own tracks. Users are urged to update their security software and be cautious of phishing emails.",
+    "hashtags": ["#cybersecurity", "#tech", "#privacy"],
+    "reactions": {
+      "fire": 1800,
+      "thumbs": 1200,
+      "love": 200,
+      "wow": 2200
+    },
+    "author": "Alex Cyan",
+    "createdAt": "2025-09-21T11:00:00Z"
+  },
+  {
+    "id": 14,
+    "title": "Van Life: The Reality Behind the Instagram Posts",
+    "image": "https://placehold.co/600x400/FFC107/333333?text=Van+Life",
+    "body": "The #VanLife movement promises freedom and adventure, but what's it really like to live in a vehicle full-time? We speak to several nomads who share the highs and lows of life on the road, from breathtaking sunrises to unexpected mechanical breakdowns.",
+    "hashtags": ["#travel", "#lifestyle", "#adventure"],
+    "reactions": {
+      "fire": 750,
+      "thumbs": 2900,
+      "love": 2300,
+      "wow": 1400
+    },
+    "author": "Wanderlust Weekly",
+    "createdAt": "2025-09-20T17:30:00Z"
+  },
+  {
+    "id": 15,
+    "title": "How Meditation Can Boost Your Productivity",
+    "image": "https://placehold.co/600x400/007BFF/FFFFFF?text=Mindfulness",
+    "body": "It may seem counterintuitive, but taking time to do nothing can actually help you get more done. Studies show that a regular meditation practice can improve focus, reduce stress, and enhance creativity, leading to a significant boost in productivity.",
+    "hashtags": ["#wellness", "#productivity", "#mentalhealth"],
+    "reactions": {
+      "fire": 350,
+      "thumbs": 1900,
+      "love": 2600,
+      "wow": 600
+    },
+    "author": "Dr. Zen",
+    "createdAt": "2025-09-19T09:00:00Z"
+  },
+  {
+    "id": 16,
+    "title": "Lost City of Zinj Found in Amazon Rainforest",
+    "image": "https://placehold.co/600x400/28A745/FFFFFF?text=Lost+City",
+    "body": "Archaeologists using advanced LiDAR technology have uncovered the ruins of a sprawling ancient city deep within the Amazon rainforest. The discovery is being hailed as one of the most significant archaeological finds of the 21st century.",
+    "hashtags": ["#history", "#archaeology", "#discovery"],
+    "reactions": {
+      "fire": 2200,
+      "thumbs": 4100,
+      "love": 3100,
+      "wow": 5500
+    },
+    "author": "Indiana Jones",
+    "createdAt": "2025-09-18T14:00:00Z"
+  },
+  {
+    "id": 17,
+    "title": "The Ethics of AI Art: Creativity or Theft?",
+    "image": "https://placehold.co/600x400/DC3545/FFFFFF?text=AI+Art",
+    "body": "Generative AI can create stunning images from simple text prompts, but it raises complex ethical questions. Is it a tool for artists, or does it devalue human creativity by training on copyrighted works without permission? We explore the ongoing debate.",
+    "hashtags": ["#ai", "#art", "#ethics", "#tech"],
+    "reactions": {
+      "fire": 1600,
+      "thumbs": 1500,
+      "love": 800,
+      "wow": 1900
+    },
+    "author": "Art Critic Monthly",
+    "createdAt": "2025-09-17T18:30:00Z"
+  },
+  {
+    "id": 18,
+    "title": "World's Largest Solar Farm Goes Online",
+    "image": "https://placehold.co/600x400/FFC107/333333?text=Solar+Power",
+    "body": "A massive new solar power plant, covering an area of 50 square kilometers, was officially connected to the grid today. It has the capacity to power over two million homes and marks a major step forward in the global transition to renewable energy.",
+    "hashtags": ["#energy", "#sustainability", "#climate"],
+    "reactions": {
+      "fire": 2500,
+      "thumbs": 4500,
+      "love": 3800,
+      "wow": 3200
+    },
+    "author": "Eco News",
+    "createdAt": "2025-09-16T12:00:00Z"
+  },
+  {
+    "id": 19,
+    "title": "Can Reading Fiction Actually Make You a Better Person?",
+    "image": "https://placehold.co/600x400/6C757D/FFFFFF?text=Reading",
+    "body": "New research suggests that immersing yourself in fictional stories can enhance your empathy and understanding of others. By stepping into the shoes of different characters, readers can improve their social skills and emotional intelligence in the real world.",
+    "hashtags": ["#books", "#psychology", "#selfimprovement"],
+    "reactions": {
+      "fire": 400,
+      "thumbs": 2200,
+      "love": 4000,
+      "wow": 1100
+    },
+    "author": "The Bookworm",
+    "createdAt": "2025-09-15T15:00:00Z"
+  },
+  {
+    "id": 20,
+    "title": "Unpacking the Latest Streetwear Trends for Fall",
+    "image": "https://placehold.co/600x400/343A40/FFFFFF?text=Streetwear",
+    "body": "As the seasons change, so does the world of fashion. From oversized silhouettes to bold new color palettes, we break down the must-have streetwear trends for the upcoming fall season and show you how to incorporate them into your wardrobe.",
+    "hashtags": ["#fashion", "#style", "#streetwear"],
+    "reactions": {
+      "fire": 900,
+      "thumbs": 1700,
+      "love": 1300,
+      "wow": 600
+    },
+    "author": "Vogueish",
+    "createdAt": "2025-09-14T20:00:00Z"
+  }
+]
+
