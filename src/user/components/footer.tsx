@@ -39,7 +39,7 @@ const footer = () => {
             <p className='text-neutral-n2 mb-7'>Get early access to the Game-Changing Platform, Where the Banter gets Better</p>
 
             
-                <form action=" " className='flex flex-col md:flex-col-reverse gap-y-3  mb-5 items-center'>
+                <form action=" " className='flex flex-col md:flex-row gap-y-3  mb-5 items-center'>
                     <input type="text" placeholder='Enter your email' className='bg-white w-full px-4 py-2 rounded-l  outline-none focus:border-1  border-brand-p4' />
                     <input type="button" value="Join Now!" className='secondary w-50 font-medium text-[14px] outline-none text-white cursor-pointer px-4 py-2  rounded-r  hover:bg-blue-600 transition-colors duration-200' typeof='submit' />
                 </form>
