@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { HeadProvider, Title, Meta } from "react-head";
 import { useParams } from "react-router-dom";
 import ReadAlso from "../components/readalso";
 import { getPostById, reactToPost, commentOnPost, type ReactionType, type NewComment } from "../../api/endpoints";
@@ -103,34 +104,41 @@ const BlogReadPage = () => {
   
 
   if (loading) return (
+
+    
+    
     <div className="flex flex-col lg:flex-row gap-8 px-4 md:px-12 py-8 max-w-7xl mx-auto">
-      <div className="w-full md:w-7/10 lg:w-7/10">
-        <div className="h-6 w-2/3 bg-snow-200 rounded mb-3 animate-pulse" />
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-3 w-24 bg-snow-200 rounded animate-pulse" />
-          <div className="h-3 w-3 bg-snow-200 rounded animate-pulse" />
-          <div className="h-3 w-28 bg-snow-200 rounded animate-pulse" />
+        <div className="w-full md:w-7/10 lg:w-7/10">
+          <div className="h-6 w-2/3 bg-snow-200 rounded mb-3 animate-pulse" />
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-3 w-24 bg-snow-200 rounded animate-pulse" />
+            <div className="h-3 w-3 bg-snow-200 rounded animate-pulse" />
+            <div className="h-3 w-28 bg-snow-200 rounded animate-pulse" />
+          </div>
+          <div className="w-full aspect-video bg-snow-200 rounded-lg mb-6 animate-pulse" />
+          <div className="space-y-3 mb-6">
+            <div className="h-4 w-full bg-snow-200 rounded animate-pulse" />
+            <div className="h-4 w-11/12 bg-snow-200 rounded animate-pulse" />
+            <div className="h-4 w-10/12 bg-snow-200 rounded animate-pulse" />
+          </div>
+          <div className="flex gap-6 mt-8 mb-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-8 w-16 bg-snow-200 rounded-full animate-pulse" />
+            ))}
+          </div>
         </div>
-        <div className="w-full aspect-video bg-snow-200 rounded-lg mb-6 animate-pulse" />
-        <div className="space-y-3 mb-6">
-          <div className="h-4 w-full bg-snow-200 rounded animate-pulse" />
-          <div className="h-4 w-11/12 bg-snow-200 rounded animate-pulse" />
-          <div className="h-4 w-10/12 bg-snow-200 rounded animate-pulse" />
-        </div>
-        <div className="flex gap-6 mt-8 mb-2">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-8 w-16 bg-snow-200 rounded-full animate-pulse" />
-          ))}
+        <div className="w-full lg:w-3/10">
+          <div className="h-5 w-24 bg-snow-200 rounded mb-4 animate-pulse" />
+          <div className="h-80 w-full bg-snow-200 rounded animate-pulse" />
         </div>
       </div>
-      <div className="w-full lg:w-3/10">
-        <div className="h-5 w-24 bg-snow-200 rounded mb-4 animate-pulse" />
-        <div className="h-80 w-full bg-snow-200 rounded animate-pulse" />
-      </div>
-    </div>
   );
     if (error) return <p>{error}</p>;
     return (
+      <HeadProvider>
+      <Title>{post.title}</Title>
+      <Meta name="description" content={post.title} />
+      <Meta property="og:image" content={post.imageUrl} />
       <div className="flex flex-col lg:flex-row gap-8 px-4 md:px-12 py-8 max-w-7xl mx-auto">
         {/* Main Content */}
         <div className="w-full md:w-7/10 lg:w-7/10">
@@ -229,6 +237,7 @@ const BlogReadPage = () => {
           </div>
         </div>
       </div>
+    </HeadProvider >
     );
 };
 
