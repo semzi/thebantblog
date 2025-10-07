@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div className='sticky top-0 z-5'>
             <div className='flex bg-snow-100/50 backdrop-blur-md py-2 page-padding-x justify-between border-b border-brand-p3/70 items-center'>
-                <img src='/logos/blacktext.png' alt='logo' className='w-30' />
+                <a href="/"><img src='/logos/blacktext.png'  alt='logo' className='w-30' /></a>
                 {/* Desktop Nav */}
                 <div className='hidden md:flex text-sm text-neutral-n3 items-center gap-7'>
                     <button className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Home</button>
