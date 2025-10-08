@@ -69,19 +69,18 @@ const Highlight = () => {
         <Link to={first ? `/blog/${first._id ?? first.id}` : "#"} className="bg-center aspect-10/10  md:aspect-video  flex-4 rounded shadow-xl relative block" style={{ backgroundImage: first ? `url(${first.imageUrl})` : "url('logos/logo.png')", backgroundSize: 'cover' }}>
           <div className="absolute bg-gradient-to-t from-black/80 to-transparent inset-0 rounded-[8px] pointer-events-none" />
           <div className="flex flex-col absolute bottom-8 w-full px-8 gap-y-2">
-            <div className="flex items-center text-white gap-2 sz-7 ">
+            <div className="flex items-center text-sm md:text-md text-white gap-2 sz-7 ">
               <img src="logos/logo.png" alt="" className="w-6 h-6 rounded-full" />
               <span>TikiAnaly</span>
               <span>|</span>
               <span>6 mins read</span>
             </div>
-            <p className="text-white  sz-4 font-bold">
+            <p className="text-white text-lg   md:text-xl font-bold">
               {first?.title ?? "Latest highlight"}
             </p>
             <div className="flex justify-between">
-              <div className="flex gap-3">
-                <span className="text-white sz-7">{first ? new Date(first.createdAt ?? Date.now()).toLocaleString() : ""}</span>
-                <ShareIcon className="w-5 h-5 cursor-pointer text-white" />
+              <div className="flex gap-3 justify-between md:justify-normal items-center">
+                <span className="text-white text-xs md:text-md">{first ? new Date(first.createdAt ?? Date.now()).toLocaleString() : ""}</span>
               </div>
               <div className="hidden md:flex animate-bounce bg-snow-100/20 px-6 py-1 rounded-full text-white gap-2 text-sm">
                 Read post

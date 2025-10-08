@@ -5,6 +5,7 @@ import ReadAlso from "../components/readalso";
 import { getPostById, reactToPost, commentOnPost, type ReactionType, type NewComment } from "../../api/endpoints";
 import { useFetch } from "../../hook/UseFetch";
 import { Send } from "lucide-react";
+import { marked } from "marked";
 
 // Static fallback sample removed; page now fetches by id
 
@@ -155,9 +156,10 @@ const BlogReadPage = () => {
             alt={post.title}
             className="w-full aspect-video object-cover rounded-lg mb-6"
           />
-          <div className="text-base text-gray-800 mb-6 leading-relaxed">
-            {post.content}
-          </div>
+            <div
+            className="richtext max-w-none text-gray-800 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+            />
           <div className="flex flex-wrap gap-2 mb-10">
             {(post.hashtags ?? []).map((tag: string) => (
               <span key={tag} className="bg-brand-p3/10 text-brand-p1 px-3 py-1 rounded-full text-xs font-medium">#{tag}</span>
