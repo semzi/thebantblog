@@ -1,7 +1,6 @@
 import {
   ArrowUpRight,
   Send,
-  ShareIcon,
 } from "lucide-react";
 import { useMemo, useState, useEffect } from "react";
 import { useFetch } from "../../hook/UseFetch";
