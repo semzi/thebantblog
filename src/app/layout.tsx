@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={` ${poppins.variable} antialiased`}>
+      <body className={` ${poppins.variable} antialiased`} suppressHydrationWarning>
         <div className='flex flex-col min-h-screen'>
           <Header />
           <main className='flex-1 min-h-[80vh] page-padding-x py-4'>
