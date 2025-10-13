@@ -5,6 +5,7 @@ import { createBlogPost } from "@/lib/api/endpoints";
 import Link from "next/link";
 import { BookAIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const dashboardStats = {
   blogs: 12,
@@ -122,11 +123,14 @@ export default function AdminPage() {
             onChange={handleImageChange}
           />
           {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="mt-2 aspect-video h-32 rounded object-cover"
-            />
+            <div className="relative mt-2 aspect-video h-32">
+              <Image
+                src={imagePreview}
+                alt="Preview"
+                fill
+                className="rounded object-cover"
+              />
+            </div>
           )}
         </div>
         <div>

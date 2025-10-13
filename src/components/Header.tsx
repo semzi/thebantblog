@@ -2,6 +2,7 @@
 import { Search, User, Menu } from 'lucide-react'
 import  { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -9,7 +10,7 @@ const Header = () => {
     return (
         <div className='sticky top-0 z-5'>
             <div className='flex bg-snow-100/50 backdrop-blur-md py-2 page-padding-x justify-between border-b border-brand-p3/70 items-center'>
-                <Link href="/"><img src='/logos/blacktext.png'  alt='logo' className='w-30' /></Link>
+                <Link href="/"><Image src='/logos/blacktext.png' alt='TikiAnaly Logo' width={120} height={40} className='w-30' /></Link>
                 <div className='hidden md:flex text-sm text-neutral-n3 items-center gap-7'>
                 <Link href='https://www.youtube.com/@TikiAnaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Youtube</Link>
                     <Link href='https://medium.com/@tikianaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Medium</Link>

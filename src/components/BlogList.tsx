@@ -2,6 +2,7 @@
 import { getAllPosts } from "@/lib/api/endpoints";
 import { useFetch } from "@/lib/hooks/useFetch";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Blog {
   _id?: string;
@@ -57,10 +58,14 @@ const BlogList: React.FC = () => {
               key={(blog._id ?? blog.id) + blog.title}
               className="flex  items-center cursor-pointer bg-snow-100 hover:bg-snow-200 transition-colors rounded shadow py-3 px-4"
             >
-              <img
-                src={blog?.imageUrl || undefined}
-                alt={blog.title}
-                className="aspect-video h-20 object-cover rounded-md mr-3" />
+              <div className="relative aspect-video h-20 mr-3">
+                <Image
+                  src={blog?.imageUrl || '/logos/logo.png'}
+                  alt={blog.title}
+                  fill
+                  className="object-cover rounded-md"
+                />
+              </div>
               <div className="flex flex-col justify-between h-20 flex-1">
                 <h3 className="text-sm md:text-base md:font-semibold">
                   <span className="md:hidden">

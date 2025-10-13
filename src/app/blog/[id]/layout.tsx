@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 
 type Props = {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default function BlogPostLayout({ children }: Props) {
+export default async function BlogPostLayout({ children }: Props) {
   return children;
 }
 
@@ -18,9 +18,10 @@ interface ApiResponse {
   responseObject?: Post;
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
-    const res = await fetch(`https://tikianaly-blog.onrender.com/api/v1/blogpost/${params.id}`, { cache: 'no-store' });
+    const { id } = await params;
+    const res = await fetch(`https://tikianaly-blog.onrender.com/api/v1/blogpost/${id}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('failed');
     const data = await res.json() as ApiResponse;
     const post = data?.responseObject ?? null;
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
         description,
         images: imageUrl ? [imageUrl] : undefined,
       },
-      alternates: { canonical: `/blog/${params.id}` },
+      alternates: { canonical: `/blog/${id}` },
     };
   } catch (_) {
     return { title: "Blog post", description: "Read the latest from TikiAnaly" };

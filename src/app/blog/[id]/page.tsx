@@ -7,6 +7,7 @@ import { Send } from "lucide-react";
 import { marked } from "marked";
 import ReadAlso from "@/components/ReadAlso";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 const reactionConfig = [
   { key: "like", icon: "👍", label: "Like" },
@@ -159,14 +160,17 @@ export default function BlogPostPage() {
             <span className="hidden md:block">•</span>
               <span suppressHydrationWarning>{formatDate(post.createdAt)}</span>
           </div>
-          <img
-            src={post?.imageUrl || undefined}
-            alt={post.title}
-            className="w-full aspect-video object-cover rounded-lg mb-6"
-          />
+          <div className="relative w-full aspect-video mb-6">
+            <Image
+              src={post?.imageUrl || '/logos/logo.png'}
+              alt={post.title ?? 'Blog post'}
+              fill
+              className="object-cover rounded-lg"
+            />
+          </div>
             <div
             className="richtext max-w-none text-gray-800 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+            dangerouslySetInnerHTML={{ __html: marked(post.content ?? '') }}
             />
           <div className="flex flex-wrap gap-2 mb-10">
             {(post.hashtags ?? []).map((tag: string) => (
@@ -219,14 +223,14 @@ export default function BlogPostPage() {
 
               <div className="flex mx-5 h-full overflow-y-auto hide-scrollbar flex-col gap-3">
               <p className="font-[500] mb-1 flex items-center sz-4 theme-text">
-                Comments <img src="/fire.gif" className="w-5 ml-auto" alt="" />
+                Comments <Image src="/fire.gif" alt="fire" width={20} height={20} className="w-5 ml-auto" />
               </p>
                 {comments.length === 0 ? (
                   <p className="text-neutral-m6 text-xs">Be the first to comment.</p>
                 ) : (
                   comments.map((c, i) => (
                     <div key={i} className="flex items-start gap-2">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=static-seed-${i}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`} alt="" className="h-5 w-5 rounded-full" />
+                      <Image src={`https://api.dicebear.com/7.x/avataaars/svg?seed=static-seed-${i}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`} alt={c.displayName} width={20} height={20} className="h-5 w-5 rounded-full" />
                       <div className="block">
                         <p className="text-neutral-m6 text-xs">{c.displayName}</p>
                         <p>{c.message}</p>

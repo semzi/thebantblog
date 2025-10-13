@@ -3,6 +3,7 @@ import React from "react";
 import { useFetch } from "@/lib/hooks/useFetch";
 import { getAllPosts } from "@/lib/api/endpoints";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Blog {
   _id?: string;
@@ -56,11 +57,14 @@ const ReadAlso: React.FC<{ currentId?: string }> = ({ currentId }) => {
             key={`${blog._id ?? blog.id}-${blog.title ?? ''}`}
             className="flex items-center cursor-pointer bg-snow-100 hover:bg-snow-200 transition-colors rounded py-3 px-4"
           >
-            <img
-              src={blog?.imageUrl || undefined}
-              alt={blog.title}
-              className="w-32 h-20 object-cover rounded-md mr-4"
-            />
+            <div className="relative w-32 h-20 mr-4">
+              <Image
+                src={blog?.imageUrl || '/logos/logo.png'}
+                alt={blog.title ?? 'Blog post'}
+                fill
+                className="object-cover rounded-md"
+              />
+            </div>
             <div className="flex flex-col justify-between h-full flex-1">
               <h3 className="text-sm ">{blog.title && blog.title.length > 60 ? `${blog.title.slice(0, 50)}…` : blog.title}</h3>
               <div className="flex items-center text-xs text-gray-500 space-x-3">

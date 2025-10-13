@@ -3,6 +3,7 @@ import { Facebook, InstagramIcon, X } from 'lucide-react';
 import  { useMemo, useState } from 'react'
 import { joinWaitlist } from '@/lib/api/endpoints'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const useRandomProfilePictures = (count: number) => {
     const profilePictures = useMemo(() => {
@@ -63,10 +64,12 @@ const Footer = () => {
                         <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-white"></div>
                     ) : (
                         profilePictures.map((picture, index) => (
-                            <img
+                            <Image
                                 key={index}
                                 src={picture}
                                 alt={`Profile ${index + 1}`}
+                                width={24}
+                                height={24}
                                 className="w-6 h-6 rounded-full border-2 border-white"
                             />
                         ))

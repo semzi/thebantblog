@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAllPosts, deleteBlogPost } from "@/lib/api/endpoints";
+import Image from "next/image";
 
 interface Blog {
   _id?: string;
@@ -89,17 +90,21 @@ export default function BlogPostListPage() {
           <div className="text-center text-gray-500">No blog posts found.</div>
         )}
         {blogs.map((blog) => {
-          const blogId = blog._id ?? blog.id;
+          const blogId = blog._id ?? blog.id ?? '';
+          if (!blogId) return null;
           return (
             <div
               key={blogId}
               className="flex items-center bg-snow-100 rounded shadow px-4 py-3 gap-4"
             >
-              <img
-                src={blog.imageUrl || undefined}
-                alt={blog.title}
-                className="w-20 h-14 object-cover rounded"
-              />
+              <div className="relative w-20 h-14">
+                <Image
+                  src={blog.imageUrl || '/logos/logo.png'}
+                  alt={blog.title}
+                  fill
+                  className="object-cover rounded"
+                />
+              </div>
               <div className="flex-1">
                 <h3 className="font-semibold">{blog.title}</h3>
                 <div className="text-xs text-gray-500">

@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useFetch } from "@/lib/hooks/useFetch";
 import { getAllPosts, commentOnPost, type NewComment } from "@/lib/api/endpoints";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Post {
   _id?: string;
@@ -84,7 +85,7 @@ const Highlight = () => {
           <div className="absolute bg-gradient-to-t from-black/80 to-transparent inset-0 rounded-[8px] pointer-events-none" />
           <div className="flex flex-col absolute bottom-8 w-full px-8 gap-y-2">
             <div className="flex items-center text-sm md:text-md text-white gap-2 sz-7 ">
-              <img src="logos/logo.png" alt="" className="w-6 h-6 rounded-full" />
+              <Image src="/logos/logo.png" alt="TikiAnaly" width={24} height={24} className="w-6 h-6 rounded-full" />
               <span>TikiAnaly</span>
               <span>|</span>
               <span>6 mins read</span>
@@ -127,7 +128,7 @@ const Highlight = () => {
               </div>
 
               <p className="font-[500] mb-1 flex items-center sz-4 theme-text">
-                Comments <img src="/fire.gif" className="w-5 ml-auto" alt="" />
+                Comments <Image src="/fire.gif" alt="fire" width={20} height={20} className="w-5 ml-auto" />
               </p>
               <div className="flex flex-col gap-3">
                 {comments.length === 0 ? (
@@ -135,7 +136,7 @@ const Highlight = () => {
                 ) : (
                   comments.map((c, i) => (
                     <div key={i} className="flex items-start gap-2">
-                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=static-seed-${i}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`} alt="" className="h-5 w-5 rounded-full" />
+                  <Image src={`https://api.dicebear.com/7.x/avataaars/svg?seed=static-seed-${i}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`} alt={c.displayName} width={20} height={20} className="h-5 w-5 rounded-full" />
                       <div className="block">
                         <p className="text-neutral-m6 text-xs">{c.displayName}</p>
                         <p>{c.message}</p>
