@@ -5,9 +5,24 @@ import { useFetch } from "@/lib/hooks/useFetch";
 import { getAllPosts, commentOnPost, type NewComment } from "@/lib/api/endpoints";
 import Link from "next/link";
 
+interface Post {
+  _id?: string;
+  id?: string;
+  title?: string;
+  imageUrl?: string;
+  createdAt?: string;
+  comments?: Array<{ displayName: string; message: string }>;
+}
+
+interface ApiResponse {
+  responseObject?: {
+    items?: Post[];
+  };
+}
+
 const Highlight = () => {
   const { data, loading, error } = useFetch(getAllPosts, []);
-  const first = useMemo(() => (data as any)?.responseObject?.items?.[0] ?? null, [data]);
+  const first = useMemo(() => (data as ApiResponse)?.responseObject?.items?.[0] ?? null, [data]);
   const [comments, setComments] = useState<Array<{ displayName: string; message: string }>>([]);
   const [displayName, setDisplayName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -33,8 +48,8 @@ const Highlight = () => {
     setComments(prev => [...prev, newComment]);
     setMessage("");
     try {
-      await commentOnPost(first._id ?? first.id, newComment);
-    } catch (err) {
+      await commentOnPost(first._id ?? first.id ?? '', newComment);
+    } catch {
       setComments(prev => prev.filter((_, idx) => idx !== prev.length - 1));
       setMessage(trimmedMessage);
     } finally {

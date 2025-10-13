@@ -3,9 +3,23 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAllPosts, deleteBlogPost } from "@/lib/api/endpoints";
 
+interface Blog {
+  _id?: string;
+  id?: string;
+  title: string;
+  imageUrl?: string;
+  createdAt: string;
+}
+
+interface ApiResponse {
+  responseObject?: {
+    items?: Blog[];
+  };
+}
+
 export default function BlogPostListPage() {
   const router = useRouter();
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
 
@@ -21,8 +35,8 @@ export default function BlogPostListPage() {
 
   const fetchBlogs = async () => {
     try {
-      const data = await getAllPosts();
-      const items = (data as any)?.responseObject?.items ?? [];
+      const data = await getAllPosts() as ApiResponse;
+      const items = data?.responseObject?.items ?? [];
       setBlogs(items);
     } catch (err) {
       console.error('Failed to fetch blogs:', err);
@@ -37,8 +51,8 @@ export default function BlogPostListPage() {
     try {
       await deleteBlogPost(id);
       setBlogs(blogs.filter((blog) => (blog._id ?? blog.id) !== id));
-    } catch (err: any) {
-      alert(err?.message ?? 'Failed to delete post');
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to delete post');
     } finally {
       setDeleting(null);
     }

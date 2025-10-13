@@ -4,11 +4,25 @@ import { useFetch } from "@/lib/hooks/useFetch";
 import { getAllPosts } from "@/lib/api/endpoints";
 import Link from "next/link";
 
+interface Blog {
+  _id?: string;
+  id?: string;
+  title?: string;
+  imageUrl?: string;
+  createdAt?: string;
+}
+
+interface ApiResponse {
+  responseObject?: {
+    items?: Blog[];
+  };
+}
+
 const ReadAlso: React.FC<{ currentId?: string }> = ({ currentId }) => {
   const { data, loading, error } = useFetch(getAllPosts, []);
-  const items = (data as any)?.responseObject?.items ?? [];
+  const items = (data as ApiResponse)?.responseObject?.items ?? [];
   const filtered = items
-    .filter((p: any) => String(p._id ?? p.id) !== String(currentId))
+    .filter((p: Blog) => String(p._id ?? p.id) !== String(currentId))
     .slice(0, 7);
 
   if (loading) {
@@ -36,10 +50,10 @@ const ReadAlso: React.FC<{ currentId?: string }> = ({ currentId }) => {
   return (
     <div>
       <div className="space-y-4">
-        {filtered.map((blog: any) => (
+        {filtered.map((blog: Blog) => (
           <Link
             href={`/blog/${blog._id ?? blog.id}`}
-            key={(blog._id ?? blog.id) + blog.title}
+            key={`${blog._id ?? blog.id}-${blog.title ?? ''}`}
             className="flex items-center cursor-pointer bg-snow-100 hover:bg-snow-200 transition-colors rounded py-3 px-4"
           >
             <img

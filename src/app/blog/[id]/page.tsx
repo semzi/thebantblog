@@ -14,9 +14,28 @@ const reactionConfig = [
   { key: "clap", icon: "👏", label: "Clap" },
 ] as const;
 
+interface Post {
+  title?: string;
+  imageUrl?: string;
+  content?: string;
+  writer?: string;
+  createdAt?: string;
+  hashtags?: string[];
+  reactions?: {
+    like?: number;
+    love?: number;
+    clap?: number;
+  };
+  comments?: Array<{ displayName: string; message: string }>;
+}
+
+interface ApiResponse {
+  responseObject?: Post;
+}
+
 export default function BlogPostPage() {
   const routeParams = useParams();
-  const id = String((routeParams as any).id ?? "");
+  const id = String(routeParams?.id ?? "");
   const [selected, setSelected] = useState<string | null>(null);
   const [reactionCounts, setReactionCounts] = useState<Record<string, number>>({ like: 0, love: 0, clap: 0 });
   const [isReacting, setIsReacting] = useState<boolean>(false);
@@ -27,7 +46,7 @@ export default function BlogPostPage() {
   const [isSubmittingComment, setIsSubmittingComment] = useState<boolean>(false);
 
   const { data, loading, error } = useFetch(() => getPostById(id), [id]);
-  const post = (data as any)?.responseObject ?? null;
+  const post = (data as ApiResponse)?.responseObject ?? null;
 
   useEffect(() => {
     if (post?.reactions) {
@@ -67,7 +86,7 @@ export default function BlogPostPage() {
       const key = `post:${id}:reaction`;
       if (typeof window !== 'undefined') localStorage.setItem(key, type);
       setHasReacted(true);
-    } catch (e) {
+    } catch {
       setReactionCounts(prev => ({ ...prev, [type]: Math.max(0, (prev[type] ?? 1) - 1) }));
       setSelected(null);
     } finally {
@@ -87,7 +106,7 @@ export default function BlogPostPage() {
     setMessage("");
     try {
       await commentOnPost(id, newComment);
-    } catch (err) {
+    } catch {
       setComments(prev => prev.filter((_, idx) => idx !== prev.length - 1));
       setMessage(trimmedMessage);
     } finally {

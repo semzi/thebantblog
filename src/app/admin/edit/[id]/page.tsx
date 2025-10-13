@@ -4,6 +4,17 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useRouter, useParams } from "next/navigation";
 import { getPostById, updateBlogPost } from "@/lib/api/endpoints";
 
+interface Post {
+  title?: string;
+  content?: string;
+  imageUrl?: string;
+  hashtags?: string[];
+}
+
+interface ApiResponse {
+  responseObject?: Post;
+}
+
 export default function EditBlogPage() {
   const router = useRouter();
   const params = useParams();
@@ -31,8 +42,8 @@ export default function EditBlogPage() {
 
   const fetchPost = async () => {
     try {
-      const data = await getPostById(id);
-      const post = (data as any)?.responseObject ?? null;
+      const data = await getPostById(id) as ApiResponse;
+      const post = data?.responseObject ?? null;
       if (!post) {
         setToast({ message: 'Post not found', kind: 'error' });
         setTimeout(() => router.push('/admin/blogpost'), 2000);
@@ -78,9 +89,9 @@ export default function EditBlogPage() {
       await updateBlogPost(id, payload);
       setToast({ message: 'Post updated successfully', kind: 'success' });
       setTimeout(() => router.push('/admin/blogpost'), 1500);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Update post error:', err);
-      setToast({ message: err?.message ?? 'Failed to update post', kind: 'error' });
+      setToast({ message: err instanceof Error ? err.message : 'Failed to update post', kind: 'error' });
     } finally {
       setSubmitting(false);
       setTimeout(() => setToast(null), 3000);

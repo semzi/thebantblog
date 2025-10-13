@@ -9,12 +9,21 @@ export default function BlogPostLayout({ children }: Props) {
   return children;
 }
 
+interface Post {
+  title?: string;
+  imageUrl?: string;
+}
+
+interface ApiResponse {
+  responseObject?: Post;
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   try {
     const res = await fetch(`https://tikianaly-blog.onrender.com/api/v1/blogpost/${params.id}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('failed');
-    const data = await res.json();
-    const post: any = (data as any)?.responseObject ?? null;
+    const data = await res.json() as ApiResponse;
+    const post = data?.responseObject ?? null;
     const title = post?.title ?? "Blog post";
     const description = post?.title ?? "Read the latest from TikiAnaly";
     const imageUrl = post?.imageUrl ?? undefined;

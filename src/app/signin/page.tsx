@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 import { adminLogin, type LoginCredentials } from "@/lib/api/endpoints";
 import { useRouter } from "next/navigation";
 
+interface LoginResponse {
+  responseObject?: {
+    token?: string;
+    accessToken?: string;
+  };
+}
+
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -22,15 +29,15 @@ export default function SignInPage() {
     setLoading(true);
     try {
       const creds: LoginCredentials = { email, password };
-      const data: any = await adminLogin(creds);
+      const data = await adminLogin(creds) as LoginResponse;
       const token = data?.responseObject?.token || data?.responseObject?.accessToken;
       if (!token) {
         throw new Error('No token returned by server');
       }
       if (typeof window !== 'undefined') localStorage.setItem('token', token);
       router.replace('/admin');
-    } catch (err: any) {
-      setError(err?.message ?? 'Login failed');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setLoading(false);
     }

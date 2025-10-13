@@ -3,9 +3,25 @@ import { getAllPosts } from "@/lib/api/endpoints";
 import { useFetch } from "@/lib/hooks/useFetch";
 import Link from "next/link";
 
+interface Blog {
+  _id?: string;
+  id?: string;
+  title: string;
+  imageUrl?: string;
+  createdAt?: string;
+  time?: string;
+  views?: number;
+}
+
+interface ApiResponse {
+  responseObject?: {
+    items?: Blog[];
+  };
+}
+
 const BlogList: React.FC = () => {
   const { data, loading, error } = useFetch(getAllPosts, []);
-  const items = (data as any)?.responseObject?.items ?? [];
+  const items = (data as ApiResponse)?.responseObject?.items ?? [];
 
   if (loading) return (
     <div className="space-y-3">
@@ -34,7 +50,7 @@ const BlogList: React.FC = () => {
   return (
     <div>
       <div className="space-y-3">
-        {items.slice(1).map(function (blog: any) {
+        {items.slice(1).map(function (blog: Blog) {
           return (
             <Link
               href={`/blog/${blog._id ?? blog.id}`}

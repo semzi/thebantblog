@@ -23,7 +23,6 @@ export default function AdminPage() {
   const [content, setContent] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState("");
-  const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -44,7 +43,6 @@ export default function AdminPage() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
@@ -68,11 +66,10 @@ export default function AdminPage() {
       setContent("");
       setHashtags([]);
       setHashtagInput("");
-      setImage(null);
       setImagePreview(null);
       setImageUrl("");
-    } catch (err: any) {
-      setToast({ message: err?.message ?? 'Failed to create post', kind: 'error' });
+    } catch (err: unknown) {
+      setToast({ message: err instanceof Error ? err.message : 'Failed to create post', kind: 'error' });
     } finally {
       setSubmitting(false);
       setTimeout(() => setToast(null), 3000);
