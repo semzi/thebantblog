@@ -5,20 +5,20 @@ export const getAllPosts = async () => {
   return data;
 };
 
-export const getPostById = async (id: any) => {
+export const getPostById = async (id: string) => {
   const { data } = await API.get(`/blogpost/${id}`);
   return data;
 };
 
 export type ReactionType = "like" | "love" | "clap";
 
-export const reactToPost = async (id: any, type: ReactionType) => {
+export const reactToPost = async (id: string, type: ReactionType) => {
   const { data } = await API.post(`/blogpost/${id}/react`, { type });
   return data;
 };
 
 export type NewComment = { displayName: string; message: string };
-export const commentOnPost = async (id: any, comment: NewComment) => {
+export const commentOnPost = async (id: string, comment: NewComment) => {
   const { data } = await API.post(`/blogpost/${id}/comments`, comment);
   return data;
 };
