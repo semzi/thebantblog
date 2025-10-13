@@ -62,7 +62,7 @@ export default function BlogPostPage() {
     } else {
       setComments([]);
     }
-  }, [post?.reactions]);
+  }, [post?.reactions, post?.comments]);
 
   useEffect(() => {
     if (!id) return;

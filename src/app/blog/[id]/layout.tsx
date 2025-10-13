@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       },
       alternates: { canonical: `/blog/${id}` },
     };
-  } catch (_) {
+  } catch {
     return { title: "Blog post", description: "Read the latest from TikiAnaly" };
   }
 }
