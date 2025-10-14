@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getPostById, reactToPost, commentOnPost, type ReactionType, type NewComment } from "@/lib/api/endpoints";
 import { useFetch } from "@/lib/hooks/useFetch";
-import { Send } from "lucide-react";
+import { Link as LinkIcon, Send } from "lucide-react";
+import Link from "next/link"; 
 import { marked } from "marked";
 import ReadAlso from "@/components/ReadAlso";
 import { notFound } from "next/navigation";
@@ -149,12 +150,12 @@ export default function BlogPostPage() {
         <div className="text-center max-w-md">
           <h2 className="text-2xl font-bold mb-4">Unable to Load Blog Post</h2>
           <p className="text-gray-600 mb-6">{error}</p>
-          <a 
+          <Link 
             href="/" 
             className="inline-block bg-brand-p1 text-white px-6 py-3 rounded-lg hover:bg-brand-p2 transition-colors"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     );
