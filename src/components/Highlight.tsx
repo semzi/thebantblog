@@ -22,7 +22,7 @@ interface ApiResponse {
 }
 
 const Highlight = () => {
-  const { data, loading, error } = useFetch(getAllPosts, []);
+  const { data, loading, error } = useFetch(() => getAllPosts(1, 20), []);
   const first = useMemo(() => (data as ApiResponse)?.responseObject?.items?.[0] ?? null, [data]);
   const [comments, setComments] = useState<Array<{ displayName: string; message: string }>>([]);
   const [displayName, setDisplayName] = useState<string>("");

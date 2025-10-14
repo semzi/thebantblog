@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { getAllPosts } from "@/lib/api/endpoints";
 import { useFetch } from "@/lib/hooks/useFetch";
 import Link from "next/link";
@@ -17,12 +18,20 @@ interface Blog {
 interface ApiResponse {
   responseObject?: {
     items?: Blog[];
+    totalPages?: number;
+    currentPage?: number;
+    totalItems?: number;
   };
 }
 
 const BlogList: React.FC = () => {
-  const { data, loading, error } = useFetch(getAllPosts, []);
+  const [page, setPage] = useState(1);
+  const limit = 20;
+  
+  const { data, loading, error } = useFetch(() => getAllPosts(page, limit), [page]);
   const items = (data as ApiResponse)?.responseObject?.items ?? [];
+  const totalPages = (data as ApiResponse)?.responseObject?.totalPages ?? 1;
+  const currentPage = (data as ApiResponse)?.responseObject?.currentPage ?? page;
 
   if (loading) return (
     <div className="space-y-3">
@@ -85,15 +94,19 @@ const BlogList: React.FC = () => {
       </div>
       <div className="flex justify-center mt-6">
         <button
-           className="px-4 py-2 rounded-l bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage(p => Math.max(1, p - 1))}
+          disabled={currentPage <= 1 || loading}
+          className="px-4 py-2 rounded-l bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Prev
         </button>
-        <span className="px-4 py-2 bg-white  text-gray-700">
-          Page 1 of 10
+        <span className="px-4 py-2 bg-white text-gray-700">
+          Page {currentPage} of {totalPages}
         </span>
         <button
-          className="px-4 py-2 rounded-r bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+          disabled={currentPage >= totalPages || loading}
+          className="px-4 py-2 rounded-r bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next
         </button>

@@ -1,7 +1,7 @@
 import API from "../api/axios";
 
-export const getAllPosts = async () => {
-  const { data } = await API.get("blogpost?page=1&limit=20");
+export const getAllPosts = async (page: number = 1, limit: number = 20) => {
+  const { data } = await API.get(`blogpost?page=${page}&limit=${limit}`);
   return data;
 };
 
@@ -57,7 +57,7 @@ export const deleteBlogPost = async (id: string) => {
 
 // Join waitlist (external backend domain, not via axios base)
 export const joinWaitlist = async (email: string) => {
-  const res = await fetch("https://backend.tikianaly.com/api/v1/waitlist/join-waitlist", {
+  const res = await fetch("https://tikianaly-service-backend.onrender.com/api/v1/waitlist/join-waitlist", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),

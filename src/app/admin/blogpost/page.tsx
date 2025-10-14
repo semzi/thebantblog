@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getAllPosts, deleteBlogPost } from "@/lib/api/endpoints";
 import Image from "next/image";
+import { Search, X } from "lucide-react";
 
 interface Blog {
   _id?: string;
@@ -15,6 +16,9 @@ interface Blog {
 interface ApiResponse {
   responseObject?: {
     items?: Blog[];
+    totalPages?: number;
+    currentPage?: number;
+    totalItems?: number;
   };
 }
 
@@ -23,6 +27,22 @@ export default function BlogPostListPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const limit = 40;
+
+  // Filter blogs based on search query
+  const filteredBlogs = useMemo(() => {
+    if (!searchQuery.trim()) return blogs;
+    
+    const query = searchQuery.toLowerCase();
+    return blogs.filter((blog) => 
+      blog.title.toLowerCase().includes(query) ||
+      new Date(blog.createdAt).toLocaleDateString().includes(query)
+    );
+  }, [blogs, searchQuery]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -32,13 +52,17 @@ export default function BlogPostListPage() {
       return;
     }
     fetchBlogs();
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, page]);
 
   const fetchBlogs = async () => {
+    setLoading(true);
     try {
-      const data = await getAllPosts() as ApiResponse;
+      const data = await getAllPosts(page, limit) as ApiResponse;
       const items = data?.responseObject?.items ?? [];
       setBlogs(items);
+      setTotalPages(data?.responseObject?.totalPages ?? 1);
+      setCurrentPage(data?.responseObject?.currentPage ?? page);
     } catch (err) {
       console.error('Failed to fetch blogs:', err);
     } finally {
@@ -84,12 +108,42 @@ export default function BlogPostListPage() {
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
-      <h2 className="text-2xl font-bold mb-6">Blog Posts</h2>
-      <div className="space-y-4">
-        {blogs.length === 0 && (
-          <div className="text-center text-gray-500">No blog posts found.</div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold">Blog Posts</h2>
+        <div className="text-sm text-gray-500">
+          {filteredBlogs.length} of {blogs.length} posts
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-6 relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <Search className="h-5 w-5 text-gray-400" />
+        </div>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by title or date..."
+          className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-p3 focus:border-transparent transition-all"
+        />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery("")}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+          >
+            <X className="h-5 w-5" />
+          </button>
         )}
-        {blogs.map((blog) => {
+      </div>
+
+      <div className="space-y-4">
+        {filteredBlogs.length === 0 && !loading && (
+          <div className="text-center text-gray-500 py-8">
+            {searchQuery ? `No posts found matching "${searchQuery}"` : 'No blog posts found.'}
+          </div>
+        )}
+        {filteredBlogs.map((blog) => {
           const blogId = blog._id ?? blog.id ?? '';
           if (!blogId) return null;
           return (
@@ -128,6 +182,29 @@ export default function BlogPostListPage() {
           );
         })}
       </div>
+      
+      {/* Pagination - only show if not searching */}
+      {blogs.length > 0 && !searchQuery && (
+        <div className="flex justify-center mt-6 gap-2">
+          <button
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={currentPage <= 1 || loading}
+            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2 bg-white border rounded text-gray-700 flex items-center">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage >= totalPages || loading}
+            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ interface ApiResponse {
 }
 
 const ReadAlso: React.FC<{ currentId?: string }> = ({ currentId }) => {
-  const { data, loading, error } = useFetch(getAllPosts, []);
+  const { data, loading, error } = useFetch(() => getAllPosts(1, 20), []);
   const items = (data as ApiResponse)?.responseObject?.items ?? [];
   const filtered = items
     .filter((p: Blog) => String(p._id ?? p.id) !== String(currentId))
