@@ -142,8 +142,27 @@ export default function BlogPostPage() {
         </div>
       </div>
   );
-  if (error) return <p>{error}</p>;
-  if (!post) return notFound();
+  
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+        <div className="text-center max-w-md">
+          <h2 className="text-2xl font-bold mb-4">Unable to Load Blog Post</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <a 
+            href="/" 
+            className="inline-block bg-brand-p1 text-white px-6 py-3 rounded-lg hover:bg-brand-p2 transition-colors"
+          >
+            Back to Home
+          </a>
+        </div>
+      </div>
+    );
+  }
+  
+  if (!post) {
+    return notFound();
+  }
   const formatDate = (value?: string) => {
     if (!value) return "";
     try { return new Date(value).toLocaleString('en-US', { timeZone: 'UTC' }); } catch { return ""; }

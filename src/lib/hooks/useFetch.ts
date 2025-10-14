@@ -8,15 +8,25 @@ export function useFetch<T>(fetchFn: () => Promise<T>, deps: DependencyList = []
 
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
+    setError(null);
 
     const fetchData = async () => {
       try {
         const result = await fetchFn();
-        if (mounted) setData(result);
+        if (mounted) {
+          setData(result);
+          setError(null);
+        }
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        if (mounted) {
+          setError(err instanceof Error ? err.message : 'An error occurred');
+          setData(null);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
