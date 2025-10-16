@@ -243,7 +243,7 @@ export default function BlogPostPage() {
 
               <div className="flex mx-5 h-full overflow-y-auto hide-scrollbar flex-col gap-3">
               <p className="font-[500] mb-1 flex items-center sz-4 theme-text">
-                Comments <Image src="/fire.gif" alt="fire" width={20} height={20} className="w-5 ml-auto" />
+                Comments 
               </p>
                 {comments.length === 0 ? (
                   <p className="text-neutral-m6 text-xs">Be the first to comment.</p>

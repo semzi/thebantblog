@@ -128,7 +128,7 @@ const Highlight = () => {
               </div>
 
               <p className="font-[500] mb-1 flex items-center sz-4 theme-text">
-                Comments <Image src="/fire.gif" alt="fire" width={20} height={20} className="w-5 ml-auto" />
+                Comments
               </p>
               <div className="flex flex-col gap-3">
                 {comments.length === 0 ? (
