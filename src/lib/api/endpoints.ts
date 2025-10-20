@@ -55,9 +55,15 @@ export const deleteBlogPost = async (id: string) => {
   return data;
 };
 
+// Get dashboard stats
+export const getDashboardStats = async () => {
+  const { data } = await API.get("blogpost/totals");
+  return data;
+};
+
 // Join waitlist (external backend domain, not via axios base)
 export const joinWaitlist = async (email: string) => {
-  const res = await fetch("https://corsproxy.io/https://tikianaly-service-backend.onrender.com/api/v1/waitlist/join-waitlist", {
+  const res = await fetch("https://corsproxy.io/https://tikianaly-service-backend-g2fp.onrender.com/api/v1/waitlist/join-waitlist", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),

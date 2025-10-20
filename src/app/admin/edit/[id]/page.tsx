@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import dynamic from "next/dynamic";
 import { useRouter, useParams } from "next/navigation";
 import { getPostById, updateBlogPost } from "@/lib/api/endpoints";
+
+// Dynamically import MDEditor to avoid SSR issues
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 interface Post {
   title?: string;
@@ -92,7 +95,19 @@ export default function EditBlogPage() {
       setTimeout(() => router.push('/admin/blogpost'), 1500);
     } catch (err: unknown) {
       console.error('Update post error:', err);
-      setToast({ message: err instanceof Error ? err.message : 'Failed to update post', kind: 'error' });
+      let errorMessage = 'Failed to update post';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+        // Handle specific error cases
+        if (err.message.includes('401')) {
+          errorMessage = 'Authentication failed. Please sign in again.';
+          localStorage.removeItem('token');
+          router.replace('/signin');
+        } else if (err.message.includes('400')) {
+          errorMessage = 'Invalid data provided. Please check your inputs.';
+        }
+      }
+      setToast({ message: errorMessage, kind: 'error' });
     } finally {
       setSubmitting(false);
       setTimeout(() => setToast(null), 3000);
@@ -138,20 +153,14 @@ export default function EditBlogPage() {
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Content</label>
-          <Editor
-            apiKey='el7908i5y3hmdh73qqfb0oi4xjp9qnqalzgoqk8d43efanx4'
-            value={content}
-            init={{
-              height: 250,
-              menubar: false,
-              plugins: [
-                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
-            }}
-            onEditorChange={(newValue) => setContent(newValue)}
-          />
+          <div className="border rounded overflow-hidden">
+            <MDEditor
+              value={content}
+              onChange={(val) => setContent(val || "")}
+              height={250}
+              data-color-mode="light"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Hashtags</label>

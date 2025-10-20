@@ -38,7 +38,20 @@ export default function SignInPage() {
       if (typeof window !== 'undefined') localStorage.setItem('token', token);
       router.replace('/admin');
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      console.error('Login error:', err);
+      let errorMessage = 'Login failed';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+        // Handle specific error cases
+        if (err.message.includes('400')) {
+          errorMessage = 'Invalid email or password. Please check your credentials.';
+        } else if (err.message.includes('401')) {
+          errorMessage = 'Authentication failed. Please check your credentials.';
+        } else if (err.message.includes('Network Error') || err.message.includes('ECONNABORTED')) {
+          errorMessage = 'Network error. Please check your connection and try again.';
+        }
+      }
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

@@ -1,25 +1,68 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { createBlogPost } from "@/lib/api/endpoints";
+import dynamic from "next/dynamic";
+import { createBlogPost, getDashboardStats } from "@/lib/api/endpoints";
 import Link from "next/link";
-import { BookAIcon } from "lucide-react";
+import { BookAIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const dashboardStats = {
-  blogs: 12,
-  comments: 56,
-  reactions: 102,
-};
+// Dynamically import MDEditor to avoid SSR issues
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+
+interface DashboardStats {
+  blogs: number;
+  comments: number;
+  reactions: number;
+}
 
 export default function AdminPage() {
   const router = useRouter();
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const token = localStorage.getItem('token');
-    if (!token) router.replace('/signin');
+    if (!token) {
+      router.replace('/signin');
+      return;
+    }
+    // Validate token by making a test request
+    const validateToken = async () => {
+      try {
+        // You could add a token validation endpoint here
+        // For now, we'll just check if token exists
+        if (!token) {
+          localStorage.removeItem('token');
+          router.replace('/signin');
+        }
+      } catch (error) {
+        console.error('Token validation failed:', error);
+        localStorage.removeItem('token');
+        router.replace('/signin');
+      }
+    };
+    validateToken();
+    fetchDashboardStats();
   }, [router]);
+
+  const fetchDashboardStats = async () => {
+    try {
+      setStatsLoading(true);
+      const response = await getDashboardStats();
+      // Handle the API response format: { success: true, responseObject: { totalPost: 19486, totalComment: 22 } }
+      if (response?.success && response?.responseObject) {
+        setDashboardStats({
+          blogs: response.responseObject.totalPost || 0,
+          comments: response.responseObject.totalComment || 0,
+          reactions: 0, // Not provided by API, keeping as 0
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch dashboard stats:', error);
+      // Keep default values (0) on error
+    } finally {
+      setStatsLoading(false);
+    }
+  };
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -28,6 +71,12 @@ export default function AdminPage() {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
+    blogs: 0,
+    comments: 0,
+    reactions: 0,
+  });
+  const [statsLoading, setStatsLoading] = useState<boolean>(true);
 
   const handleAddHashtag = () => {
     const tag = hashtagInput.trim();
@@ -69,8 +118,23 @@ export default function AdminPage() {
       setHashtagInput("");
       setImagePreview(null);
       setImageUrl("");
+      // Refresh dashboard stats after creating a new post
+      fetchDashboardStats();
     } catch (err: unknown) {
-      setToast({ message: err instanceof Error ? err.message : 'Failed to create post', kind: 'error' });
+      console.error('Create post error:', err);
+      let errorMessage = 'Failed to create post';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+        // Handle specific error cases
+        if (err.message.includes('401')) {
+          errorMessage = 'Authentication failed. Please sign in again.';
+          localStorage.removeItem('token');
+          router.replace('/signin');
+        } else if (err.message.includes('400')) {
+          errorMessage = 'Invalid data provided. Please check your inputs.';
+        }
+      }
+      setToast({ message: errorMessage, kind: 'error' });
     } finally {
       setSubmitting(false);
       setTimeout(() => setToast(null), 3000);
@@ -79,19 +143,35 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
         {Object.entries(dashboardStats).map(([key, value]) => (
           <div
             key={key}
             className="bg-snow-100 rounded-lg shadow p-4 flex flex-col items-center"
           >
-            <span className="text-2xl font-bold">{value}</span>
+            <span className="text-2xl font-bold">
+              {statsLoading ? (
+                <div className="w-8 h-8 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+              ) : (
+                value
+              )}
+            </span>
             <span className="text-xs text-gray-500 capitalize">{key}</span>
           </div>
         ))}
         <Link href={"/admin/blogpost"} className="secondary rounded-lg shadow p-4 flex flex-col items-center justify-center transition-colors">
                 <span className="text-2xl text-white flex items-center gap-3 font-bold"> <BookAIcon />  Posts</span>
         </Link>
+        <a 
+          href="https://imagekit.io/dashboard/media-library" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="primary rounded-lg shadow p-4 flex flex-col items-center justify-center transition-colors hover:from-blue-600 hover:to-purple-700"
+        >
+          <span className="text-2xl text-white flex items-center gap-3 font-bold">
+            <ImageIcon /> Image
+          </span>
+        </a>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
@@ -129,26 +209,21 @@ export default function AdminPage() {
                 alt="Preview"
                 fill
                 className="rounded object-cover"
+                unoptimized
               />
             </div>
           )}
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Content</label>
-          <Editor
-            apiKey='el7908i5y3hmdh73qqfb0oi4xjp9qnqalzgoqk8d43efanx4'
-            value={content}
-            init={{
-              height: 250,
-              menubar: false,
-              plugins: [
-                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
-            }}
-            onEditorChange={(newValue) => setContent(newValue)}
-          />
+          <div className="border rounded overflow-hidden">
+            <MDEditor
+              value={content}
+              onChange={(val) => setContent(val || "")}
+              height={250}
+              data-color-mode="light"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Hashtags</label>
