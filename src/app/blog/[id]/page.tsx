@@ -190,7 +190,11 @@ export default function BlogPostPage() {
           </div>
             <div
             className="richtext max-w-none text-gray-800 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: marked(post.content ?? '') }}
+            dangerouslySetInnerHTML={{ 
+              __html: String(marked(post.content ?? ''))
+                .replace(/<a\s+[^>]*href\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/a>/gi, '$1')
+                .replace(/<a\s+[^>]*>(.*?)<\/a>/gi, '$1')
+            }}
             />
           <div className="flex flex-wrap gap-2 mb-10">
             {(post.hashtags ?? []).map((tag: string) => (

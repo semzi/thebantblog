@@ -34,7 +34,7 @@ body {
   @apply text-xl font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200;
 }
 .richtext a {
-  @apply hidden
+  @apply text-black
 }
 .richtext h4 {
   @apply text-lg font-semibold mt-3 mb-2 text-gray-800 dark:text-gray-200;
