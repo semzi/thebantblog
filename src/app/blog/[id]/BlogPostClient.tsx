@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import { Link as LinkIcon, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 import {
   commentOnPost,

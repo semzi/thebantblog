@@ -3,12 +3,6 @@ import { notFound } from "next/navigation";
 import BlogPostClient from "./BlogPostClient";
 import { getPostById } from "@/lib/api/endpoints";
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
 interface Post {
   title?: string;
   imageUrl?: string;
@@ -28,8 +22,12 @@ interface ApiResponse {
   responseObject?: Post;
 }
 
-export default async function BlogPostPage({ params }: Params) {
-  const id = String(params?.id ?? "");
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   if (!id) {
     notFound();
   }
