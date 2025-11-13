@@ -1,7 +1,6 @@
 "use client";
 import  { useMemo, useState } from 'react'
 import { joinWaitlist } from '@/lib/api/endpoints'
-import Link from 'next/link'
 import Image from 'next/image'
 
 const useRandomProfilePictures = (count: number) => {
