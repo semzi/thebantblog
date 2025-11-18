@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 
 const API = axios.create({
-  baseURL: "https://tikianaly-blog-tmv5.onrender.com/api/v1/",
+  baseURL: "https://tikianaly-blog.onrender.com/api/v1/",
   headers: {
     "Content-Type": "application/json",
   },
