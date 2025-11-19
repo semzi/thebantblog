@@ -30,7 +30,8 @@ const Footer = () => {
             setEmail("");
             setToast({ message: 'Joined waitlist successfully!', kind: 'success' });
         } catch (err: unknown) {
-            setToast({ message: err instanceof Error ? err.message : 'Something went wrong', kind: 'error' });
+            console.error('Waitlist join error:', err);
+            setToast({ message: 'Something went wrong. Please try again.', kind: 'error' });
         } finally {
             setSubmitting(false);
             setTimeout(() => setToast(null), 3000);

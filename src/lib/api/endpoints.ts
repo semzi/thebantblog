@@ -63,7 +63,7 @@ export const getDashboardStats = async () => {
 
 // Join waitlist (external backend domain, not via axios base)
 export const joinWaitlist = async (email: string) => {
-  const res = await fetch("https://corsproxy.io/https://tikianaly-service-backend-g2fp.onrender.com/api/v1/waitlist/join-waitlist", {
+  const res = await fetch("https://corsproxy.io/https://tikianaly-service-backend.onrender.com/api/v1/waitlist/join-waitlist", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),
