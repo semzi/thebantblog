@@ -8,6 +8,7 @@ import { getAllPosts } from '@/lib/api/endpoints'
 interface Blog {
   _id?: string;
   id?: string;
+  slug: string;
   title: string;
   imageUrl?: string;
   createdAt?: string;
@@ -146,7 +147,7 @@ const Header = () => {
                                     {filteredBlogs.slice(0, 40).map((blog) => (
                                         <Link
                                             key={blog._id ?? blog.id}
-                                            href={`/blog/${blog._id ?? blog.id}`}
+                                            href={`/blog/${blog.slug}`}
                                             onClick={handleBlogClick}
                                             className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
                                         >
