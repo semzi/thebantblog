@@ -109,8 +109,7 @@ export default function AdminPage() {
         hashTag: hashtags.join(", "),
         authToken: "Nigeria@20",
       };
-      console.log('Sending payload:', payload);
-      await createBlogPost(payload);
+      const res = await createBlogPost(payload);
       setToast({ message: 'Post created successfully', kind: 'success' });
       setTitle("");
       setContent("");
@@ -118,6 +117,7 @@ export default function AdminPage() {
       setHashtagInput("");
       setImagePreview(null);
       setImageUrl("");
+      router.push(`/blog/${res?.responseObject.slug}`);
       // Refresh dashboard stats after creating a new post
       fetchDashboardStats();
     } catch (err: unknown) {

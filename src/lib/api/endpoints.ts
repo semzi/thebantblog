@@ -10,6 +10,11 @@ export const getPostById = async (id: string) => {
   return data;
 };
 
+export const getPostBySlug = async (slug: string) => {
+  const { data } = await API.get(`/blogpost/${slug}`);
+  return data;
+}
+
 export type ReactionType = "like" | "love" | "clap";
 
 export const reactToPost = async (id: string, type: ReactionType) => {
@@ -75,5 +80,3 @@ export const joinWaitlist = async (email: string) => {
   }
   return await res.json();
 };
-
-
