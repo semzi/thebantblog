@@ -18,6 +18,23 @@ interface DashboardStats {
 
 export default function AdminPage() {
   const router = useRouter();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [hashtags, setHashtags] = useState<string[]>([]);
+  const [hashtagInput, setHashtagInput] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageData, setImageData] = useState<string>("");
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
+    blogs: 0,
+    comments: 0,
+    reactions: 0,
+  });
+  const [statsLoading, setStatsLoading] = useState<boolean>(true);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const token = localStorage.getItem('token');
@@ -25,11 +42,8 @@ export default function AdminPage() {
       router.replace('/signin');
       return;
     }
-    // Validate token by making a test request
     const validateToken = async () => {
       try {
-        // You could add a token validation endpoint here
-        // For now, we'll just check if token exists
         if (!token) {
           localStorage.removeItem('token');
           router.replace('/signin');
@@ -48,35 +62,19 @@ export default function AdminPage() {
     try {
       setStatsLoading(true);
       const response = await getDashboardStats();
-      // Handle the API response format: { success: true, responseObject: { totalPost: 19486, totalComment: 22 } }
       if (response?.success && response?.responseObject) {
         setDashboardStats({
           blogs: response.responseObject.totalPost || 0,
           comments: response.responseObject.totalComment || 0,
-          reactions: 0, // Not provided by API, keeping as 0
+          reactions: 0,
         });
       }
     } catch (error) {
       console.error('Failed to fetch dashboard stats:', error);
-      // Keep default values (0) on error
     } finally {
       setStatsLoading(false);
     }
   };
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [hashtags, setHashtags] = useState<string[]>([]);
-  const [hashtagInput, setHashtagInput] = useState("");
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [submitting, setSubmitting] = useState<boolean>(false);
-  const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
-  const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
-    blogs: 0,
-    comments: 0,
-    reactions: 0,
-  });
-  const [statsLoading, setStatsLoading] = useState<boolean>(true);
 
   const handleAddHashtag = () => {
     const tag = hashtagInput.trim();
@@ -94,6 +92,12 @@ export default function AdminPage() {
     const file = e.target.files?.[0];
     if (file) {
       setImagePreview(URL.createObjectURL(file));
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageData(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -104,7 +108,7 @@ export default function AdminPage() {
     try {
       const payload = {
         title: title.trim(),
-        imageUrl: imageUrl.trim() || "https://via.placeholder.com/800x400",
+        imageUrl: imageUrl.trim() || imageData,
         content,
         hashTag: hashtags.join(", "),
         authToken: "Nigeria@20",
@@ -117,15 +121,14 @@ export default function AdminPage() {
       setHashtagInput("");
       setImagePreview(null);
       setImageUrl("");
+      setImageData("");
       router.push(`/blog/${res?.responseObject.slug}`);
-      // Refresh dashboard stats after creating a new post
       fetchDashboardStats();
     } catch (err: unknown) {
       console.error('Create post error:', err);
       let errorMessage = 'Failed to create post';
       if (err instanceof Error) {
         errorMessage = err.message;
-        // Handle specific error cases
         if (err.message.includes('401')) {
           errorMessage = 'Authentication failed. Please sign in again.';
           localStorage.removeItem('token');
@@ -160,7 +163,9 @@ export default function AdminPage() {
           </div>
         ))}
         <Link href={"/admin/blogpost"} className="secondary rounded-lg shadow p-4 flex flex-col items-center justify-center transition-colors">
-                <span className="text-2xl text-white flex items-center gap-3 font-bold"> <BookAIcon />  Posts</span>
+          <span className="text-2xl text-white flex items-center gap-3 font-bold"> 
+            <BookAIcon />  Posts
+          </span>
         </Link>
         <a 
           href="https://imagekit.io/dashboard/media-library" 
@@ -249,7 +254,7 @@ export default function AdminPage() {
               Add
             </button>
           </div>
-           <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             {hashtags.map((tag) => (
               <span
                 key={tag}
@@ -280,5 +285,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-
