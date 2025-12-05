@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import BlogPostClient from "./BlogPostClient";
-import { getPostById, getPostBySlug } from "@/lib/api/endpoints";
+import { getPostById } from "@/lib/api/endpoints";
 
 interface Post {
   title?: string;
