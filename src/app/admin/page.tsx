@@ -114,6 +114,7 @@ export default function AdminPage() {
         authToken: "Nigeria@20",
       };
       const res = await createBlogPost(payload);
+      console.log(res);
       setToast({ message: 'Post created successfully', kind: 'success' });
       setTitle("");
       setContent("");
