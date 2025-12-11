@@ -3,6 +3,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Analytics from "./analytics";
 
 export const metadata: Metadata = {
   title: "TikiAnaly Blog",
@@ -49,6 +50,7 @@ export default function RootLayout({
           <Header />
           <main className='flex-1 min-h-[80vh] page-padding-x py-4'>
             {children}
+            <Analytics />
           </main>
           <Footer />
         </div>
