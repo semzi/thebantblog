@@ -25,7 +25,7 @@ export default function AdminPage() {
   const [hashtagInput, setHashtagInput] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [imageData, setImageData] = useState<string>("");
+  const [_, setImageData] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
   const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
@@ -108,7 +108,7 @@ export default function AdminPage() {
     try {
       const payload = {
         title: title.trim(),
-        imageUrl: imageUrl.trim() || imageData,
+        imageUrl: imageUrl.trim() || '',
         content,
         hashTag: hashtags.join(", "),
         authToken: "Nigeria@20",
