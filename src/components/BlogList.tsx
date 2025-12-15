@@ -84,8 +84,7 @@ const BlogList: React.FC = () => {
                 </h3>
                 <div className="flex items-center gap-3 text-xs text-gray-500">
                   <span suppressHydrationWarning>{blog.time ?? formatDate(blog.createdAt)}</span>
-                  <span>•</span>
-                  <span>{(blog.views ?? 0).toLocaleString()} views</span>
+                  
                 </div>
               </div>
             </Link>
