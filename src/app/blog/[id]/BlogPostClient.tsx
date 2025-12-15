@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
@@ -16,6 +15,7 @@ import {
 } from "@/lib/api/endpoints";
 
 import ReadAlso from "@/components/ReadAlso";
+import Image from "@/components/Image";
 
 const reactionConfig = [
   { key: "like", icon: "👍", label: "Like" },
@@ -200,7 +200,6 @@ export default function BlogPostClient({
           <Image
             src={post?.imageUrl || "/logos/logo.png"}
             alt={post?.title ?? "Blog post"}
-            fill
             className="object-cover rounded-lg"
           />
         </div>
@@ -308,5 +307,3 @@ export default function BlogPostClient({
     </div>
   );
 }
-
-
