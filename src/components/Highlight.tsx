@@ -2,9 +2,13 @@
 import { ArrowUpRight, Send } from "lucide-react";
 import { useMemo, useState, useEffect } from "react";
 import { useFetch } from "@/lib/hooks/useFetch";
-import { getAllPosts, commentOnPost, type NewComment } from "@/lib/api/endpoints";
+import { getAllPosts, getPostById, commentOnPost, type NewComment } from "@/lib/api/endpoints";
 import Link from "next/link";
 import Image from "next/image";
+
+// Set this to the _id of the blog post you want pinned in the highlight section.
+// Leave it as an empty string to fall back to the latest (first) post.
+const PINNED_POST_ID = "693ecd7b98aa0cbca2eac0ff";
 
 interface Post {
   _id?: string;
@@ -15,7 +19,7 @@ interface Post {
   comments?: Array<{ displayName: string; message: string }>;
 }
 
-interface ApiResponse {
+interface ListApiResponse {
   responseObject?: {
     items?: Post[];
   };
@@ -23,7 +27,49 @@ interface ApiResponse {
 
 const Highlight = () => {
   const { data, loading, error } = useFetch(() => getAllPosts(1, 20), []);
-  const first = useMemo(() => (data as ApiResponse)?.responseObject?.items?.[0] ?? null, [data]);
+  const [pinnedPost, setPinnedPost] = useState<Post | null>(null);
+  const [isPinnedLoading, setIsPinnedLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    let active = true;
+
+    if (!PINNED_POST_ID) {
+      setPinnedPost(null);
+      return;
+    }
+
+    const fetchPinned = async () => {
+      try {
+        setIsPinnedLoading(true);
+        const result = await getPostById(PINNED_POST_ID);
+        const api = result as { responseObject?: Post };
+        if (active) {
+          setPinnedPost(api.responseObject ?? null);
+        }
+      } catch {
+        if (active) {
+          setPinnedPost(null);
+        }
+      } finally {
+        if (active) {
+          setIsPinnedLoading(false);
+        }
+      }
+    };
+
+    fetchPinned();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const first = useMemo(() => {
+    if (PINNED_POST_ID && pinnedPost) {
+      return pinnedPost;
+    }
+    return (data as ListApiResponse)?.responseObject?.items?.[0] ?? null;
+  }, [data, pinnedPost]);
   const [comments, setComments] = useState<Array<{ displayName: string; message: string }>>([]);
   const [displayName, setDisplayName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
