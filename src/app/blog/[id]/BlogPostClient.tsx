@@ -24,6 +24,7 @@ const reactionConfig = [
 ] as const;
 
 interface Post {
+  _id?: string;
   title?: string;
   imageUrl?: string;
   content?: string;
@@ -106,11 +107,12 @@ export default function BlogPostClient({
   };
 
   const handleReact = async (type: ReactionType) => {
-    if (!id || isReacting || hasReacted) return;
+    const postId = post?._id ?? id;
+    if (!postId || isReacting || hasReacted) return;
     setIsReacting(true);
     setSelected(type);
     try {
-      await reactToPost(id, type);
+      await reactToPost(postId, type);
       const key = `post:${id}:reaction`;
       if (typeof window !== "undefined") localStorage.setItem(key, type);
       setHasReacted(true);
@@ -124,7 +126,8 @@ export default function BlogPostClient({
 
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id || isSubmittingComment) return;
+    const postId = post?._id ?? id;
+    if (!postId || isSubmittingComment) return;
     const trimmedName = displayName.trim() || "Anonymous";
     const trimmedMessage = message.trim();
     if (!trimmedMessage) return;
@@ -133,7 +136,7 @@ export default function BlogPostClient({
     setComments((prev) => [...prev, newComment]);
     setMessage("");
     try {
-      await commentOnPost(id, newComment);
+      await commentOnPost(postId, newComment);
       await refreshPost();
     } catch {
       setComments((prev) => prev.filter((_, idx) => idx !== prev.length - 1));

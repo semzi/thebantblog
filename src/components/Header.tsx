@@ -152,10 +152,11 @@ const Header = () => {
                                             className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
                                         >
                                             <div className="relative w-16 h-12 flex-shrink-0">
-                                                <Image
+                                            	<Image
                                                     src={blog.imageUrl || '/logos/logo.png'}
                                                     alt={blog.title}
                                                     fill
+                                                    sizes="64px"
                                                     className="object-cover rounded"
                                                 />
                                             </div>
@@ -266,6 +267,7 @@ const Header = () => {
                                                 src={blog.imageUrl || '/logos/logo.png'}
                                                 alt={blog.title}
                                                 fill
+                                                sizes="64px"
                                                 className="object-cover rounded"
                                             />
                                         </div>
