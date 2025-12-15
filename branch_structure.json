@@ -1,0 +1,24 @@
+{
+  "default_branch": "master",
+  "branches": [
+    "ayomide-branch",
+    "main",
+    "master",
+    "origin",
+    "vercel/packages-for-react-flight-rce-e4iwdw"
+  ],
+  "parent": {
+    "ayomide-branch": "master",
+    "main": "master",
+    "master": null,
+    "origin": "master",
+    "vercel/packages-for-react-flight-rce-e4iwdw": "master"
+  },
+  "order": [
+    "master",
+    "ayomide-branch",
+    "main",
+    "origin",
+    "vercel/packages-for-react-flight-rce-e4iwdw"
+  ]
+}
