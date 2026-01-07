@@ -8,7 +8,9 @@ import Image from "next/image";
 
 // Set this to the _id of the blog post you want pinned in the highlight section.
 // Leave it as an empty string to fall back to the latest (first) post.
-const PINNED_POST_ID = "693ecd7b98aa0cbca2eac0ff";
+const PINNED_POST_ID = "";
+const PINNED_POST_STORAGE_KEY = "pinnedPostId";
+const PINNED_POST_UPDATED_EVENT = "pinned-post-updated";
 
 interface Post {
   _id?: string;
@@ -29,11 +31,31 @@ const Highlight = () => {
   const { data, loading, error } = useFetch(() => getAllPosts(1, 20), []);
   const [pinnedPost, setPinnedPost] = useState<Post | null>(null);
   const [isPinnedLoading, setIsPinnedLoading] = useState<boolean>(false);
+  const [pinnedPostId, setPinnedPostId] = useState<string>(PINNED_POST_ID);
+
+  useEffect(() => {
+    const readPinnedId = () => {
+      if (typeof window === "undefined") return PINNED_POST_ID;
+      const stored = window.localStorage.getItem(PINNED_POST_STORAGE_KEY);
+      return (stored ?? "").trim() || PINNED_POST_ID;
+    };
+
+    const updatePinnedId = () => {
+      setPinnedPostId(readPinnedId());
+    };
+
+    updatePinnedId();
+    window.addEventListener(PINNED_POST_UPDATED_EVENT, updatePinnedId);
+
+    return () => {
+      window.removeEventListener(PINNED_POST_UPDATED_EVENT, updatePinnedId);
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
 
-    if (!PINNED_POST_ID) {
+    if (!pinnedPostId) {
       setPinnedPost(null);
       return;
     }
@@ -41,7 +63,7 @@ const Highlight = () => {
     const fetchPinned = async () => {
       try {
         setIsPinnedLoading(true);
-        const result = await getPostById(PINNED_POST_ID);
+        const result = await getPostById(pinnedPostId);
         const api = result as { responseObject?: Post };
         if (active) {
           setPinnedPost(api.responseObject ?? null);
@@ -62,14 +84,14 @@ const Highlight = () => {
     return () => {
       active = false;
     };
-  }, []);
+  }, [pinnedPostId]);
 
   const first = useMemo(() => {
-    if (PINNED_POST_ID && pinnedPost) {
+    if (pinnedPostId && pinnedPost) {
       return pinnedPost;
     }
     return (data as ListApiResponse)?.responseObject?.items?.[0] ?? null;
-  }, [data, pinnedPost]);
+  }, [data, pinnedPost, pinnedPostId]);
   const [comments, setComments] = useState<Array<{ displayName: string; message: string }>>([]);
   const [displayName, setDisplayName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
