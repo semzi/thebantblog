@@ -77,6 +77,17 @@ const Footer = () => {
                 <span className="text-sm">Join 1014+ others in the waitlist</span>
             </div>
 
+            <div className='flex justify-center text-sm mb-4'>
+                <a
+                    href="https://tikianaly.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:opacity-80 transition-opacity"
+                >
+                    Go to TikiAnaly App
+                </a>
+            </div>
+
             <div className='flex justify-center text-sm items-center gap-2'>
             <a
               href="https://x.com/TikiAnaly"

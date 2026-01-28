@@ -84,6 +84,7 @@ const Header = () => {
             <div className='relative flex bg-snow-100/50 backdrop-blur-md py-2 page-padding-x justify-between border-b border-brand-p3/70 items-center'>
                 <Link href="/"><Image src='/logos/blacktext.png' alt='TikiAnaly Logo' width={120} height={40} className='w-30' /></Link>
                 <div className='hidden md:flex text-sm text-neutral-n3 items-center gap-7'>
+                <Link href='https://tikianaly.com' target="_blank" rel="noopener noreferrer" className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Main App</Link>
                 <Link href='https://www.youtube.com/@TikiAnaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Youtube</Link>
                     <Link href='https://medium.com/@tikianaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Medium</Link>
                     <Link href='https://facebook.com/tikianaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Facebook</Link>
@@ -191,6 +192,7 @@ const Header = () => {
             {menuOpen && (
                 <div className="md:hidden bg-snow-100/95 backdrop-blur-md border-b border-brand-p3/70 px-6 py-4">
                     <div className="flex flex-col gap-4 text-neutral-n3">
+                    <Link href='https://tikianaly.com' target="_blank" rel="noopener noreferrer" className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Main App</Link>
                     <Link href='https://www.youtube.com/@TikiAnaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Youtube</Link>
                     <Link href='https://medium.com/@tikianaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Medium</Link>
                     <Link href='https://facebook.com/tikianaly' className='hover:text-brand-secondary transition-colors duration-300 cursor-pointer'>Facebook</Link>
