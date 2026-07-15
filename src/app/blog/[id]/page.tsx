@@ -42,7 +42,7 @@ export default async function BlogPostPage({
     error = err instanceof Error ? err.message : "Failed to load blog post";
   }
 
-  if (!initialPost && !error) {
+  if (error || !initialPost) {
     notFound();
   }
 
